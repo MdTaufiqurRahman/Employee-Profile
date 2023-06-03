@@ -3,6 +3,7 @@ import { Layout, Menu, theme } from "antd";
 import { useState } from "react";
 import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
 import EmployeeLandingPage from "../EmployeeProfile/LandingPage";
+import TaskAssignLanding from "../TaskAssign/TaskAssignLanding";
 
 const { Content, Footer, Sider } = Layout;
 
@@ -65,4 +66,8 @@ const Profile = () => (
     <EmployeeLandingPage />
   </>
 );
-const Task = () => <div>Task Page</div>;
+const Task = () => (
+  <>
+    <TaskAssignLanding />
+  </>
+);
