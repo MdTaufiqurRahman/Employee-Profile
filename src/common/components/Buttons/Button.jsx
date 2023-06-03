@@ -1,10 +1,10 @@
 // eslint-disable-next-line react/prop-types
-const NSLButton = ({ onClick, className, children, type }) => {
+const MyButton = ({ onClick, className, children, type }) => {
   return (
     <>
       {type === "main" && (
         <button
-          className={` bg-customColor text-[#FFFFFF] text-[16px] font-semibold py-[7px] px-[10px] ${className}`}
+          className={` bg-customColor text-[#FFFFFF] text-[14px] font-semibold rounded py-[4px] px-[15px] ${className}`}
           onClick={onClick}
         >
           {children}
@@ -38,4 +38,4 @@ const NSLButton = ({ onClick, className, children, type }) => {
   );
 };
 
-export default NSLButton;
+export default MyButton;

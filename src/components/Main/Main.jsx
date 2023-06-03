@@ -1,59 +1,68 @@
-import { DashboardOutlined, TeamOutlined } from "@ant-design/icons";
-import { Menu } from "antd";
-import { Route, Routes, useNavigate } from "react-router-dom";
-import Footer from "../Footer/Footer";
-import Navbar from "../Navbar/Navbar";
+import { PieChartOutlined, TeamOutlined } from "@ant-design/icons";
+import { Layout, Menu, theme } from "antd";
+import { useState } from "react";
+import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import EmployeeLandingPage from "../EmployeeProfile/LandingPage";
+
+const { Content, Footer, Sider } = Layout;
+
+function getItem(label, path, icon, children) {
+  return {
+    path,
+    key: path,
+    icon,
+    children,
+    label,
+  };
+}
+
+const items = [
+  getItem("Employee Profile", "/profile", <TeamOutlined />),
+  getItem("Task Assign", "/task", <PieChartOutlined />),
+];
 
 const Main = () => {
-  const navigate = useNavigate();
+  const [collapsed, setCollapsed] = useState(false);
   return (
-    <>
-      <Navbar />
-      <div className="flex flex-row min-h-[calc(100vh-80px)]">
-        <Menu
-          className="min-w-[200px]"
-          onClick={(key) => {
-            navigate(key?.key);
-          }}
-          defaultSelectedKeys={[window.location.pathname]}
-          items={[
-            {
-              label: "Employee Profile",
-              key: "/employeeProfile",
-              icon: <TeamOutlined />,
-            },
-            {
-              label: "Task Assign",
-              key: "/taskAssign",
-              icon: <DashboardOutlined />,
-            },
-          ]}
-        ></Menu>
-        <Content />
-      </div>
-      <Footer />
-    </>
+    <Router>
+      <Layout className="min-h-screen">
+        <Sider collapsible collapsed={collapsed} onCollapse={setCollapsed}>
+          <div className="demo-logo-vertical" />
+          <Menu
+            theme="dark"
+            defaultSelectedKeys={[window.location.pathname]}
+            mode="inline"
+          >
+            {items.map((item) => (
+              <Menu.Item key={item?.key} icon={item?.icon}>
+                <Link to={item?.path}>{item?.label}</Link>
+              </Menu.Item>
+            ))}
+          </Menu>
+        </Sider>
+        <Layout>
+          <Content>
+            <div className="p-1 min-h-[550px] bg-[colorBgContainer]">
+              <Routes>
+                <Route path="/profile" element={<Profile />} />
+                <Route path="/task" element={<Task />} />
+              </Routes>
+            </div>
+          </Content>
+          <Footer className="text-center">
+            Codemen Solution BD ©2023 Created by Anik
+          </Footer>
+        </Layout>
+      </Layout>
+    </Router>
   );
 };
 
-function Content() {
-  return (
-    <>
-      <Routes>
-        <Route
-          path="/employeeProfile"
-          element={
-            <div>
-              Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-              Architecto, delectus voluptatibus harum unde porro nobis atque
-              aliquid aliquam nesciunt corrupti ab veniam consequatur corporis
-              facere nisi quia magni fuga. Maxime!
-            </div>
-          }
-        />
-        <Route path="/taskAssign" element={<div>Task Assign</div>} />
-      </Routes>
-    </>
-  );
-}
 export default Main;
+
+const Profile = () => (
+  <>
+    <EmployeeLandingPage />
+  </>
+);
+const Task = () => <div>Task Page</div>;
