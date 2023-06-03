@@ -2,7 +2,7 @@
 import CrossIcon from "../../../assets/CrossIcon.svg";
 import Delete from "../../../assets/trash.svg";
 
-const NSLModal = ({ isOpen, onClose, children, title }) => {
+const MyModal = ({ isOpen, onClose, children, title }) => {
   const closeModal = () => {
     onClose();
   };
@@ -21,7 +21,7 @@ const NSLModal = ({ isOpen, onClose, children, title }) => {
               {title ? (
                 <div className="flex justify-between">
                   <div></div>
-                  <div className="font-semibold text-[20px] mt-[17px] mb-[29px] text-[#333333]">
+                  <div className="font-semibold text-[16px] mt-[12px] mb-[25px] text-[black]">
                     {title}
                   </div>
                   <button
@@ -29,7 +29,11 @@ const NSLModal = ({ isOpen, onClose, children, title }) => {
                     type="button"
                     className="inline-flex rounded-md text-[#4F4F4F]"
                   >
-                    <img className="mt-[16px] mr-[26px]" src={CrossIcon} alt="cross" />
+                    <img
+                      className="mt-[16px] mr-[26px]"
+                      src={CrossIcon}
+                      alt="cross"
+                    />
                   </button>
                 </div>
               ) : (
@@ -40,7 +44,7 @@ const NSLModal = ({ isOpen, onClose, children, title }) => {
                     className="w-[73px] bg-[#EB57571A] border rounded-full p-2 mx-auto"
                   />
                   <div className="text-center mt-[17px] font-semibold text-[16px] px-4">
-                    Are you sure you want to delete this Product ?
+                    Are you sure you want to delete this Employee ?
                   </div>
                 </div>
               )}
@@ -53,4 +57,4 @@ const NSLModal = ({ isOpen, onClose, children, title }) => {
   );
 };
 
-export default NSLModal;
+export default MyModal;

@@ -4,7 +4,7 @@ const MyButton = ({ onClick, className, children, type }) => {
     <>
       {type === "main" && (
         <button
-          className={` bg-customColor text-[#FFFFFF] text-[14px] font-semibold rounded py-[4px] px-[15px] ${className}`}
+          className={` bg-customColor text-[#FFFFFF] text-[14px] font-semibold rounded py-[4px] px-[20px] ${className}`}
           onClick={onClick}
         >
           {children}
@@ -12,7 +12,7 @@ const MyButton = ({ onClick, className, children, type }) => {
       )}
       {type === "submit" && (
         <button
-          className={` bg-customSaveColor text-[#FFFFFF] text-[14px] font-semibold py-[10.5px] px-[20px] ${className}`}
+          className={` bg-customSaveColor text-[#FFFFFF] text-[14px] font-semibold rounded py-[4px] px-[20px] ${className}`}
           onClick={onClick}
         >
           {children}
@@ -20,7 +20,7 @@ const MyButton = ({ onClick, className, children, type }) => {
       )}
       {type === "delete" && (
         <button
-          className={` bg-customDeleteColor text-[#FFFFFF] text-sm font-semibold py-[10.5px] px-5 ${className}`}
+          className={` bg-customDeleteColor text-[#FFFFFF] text-sm font-semibold rounded py-[4px] px-5 ${className}`}
           onClick={onClick}
         >
           {children}
@@ -28,7 +28,7 @@ const MyButton = ({ onClick, className, children, type }) => {
       )}
       {type === "cancel" && (
         <button
-          className={` text-[#EB5757] text-[14px] font-semibold border  border-customDeleteColor py-[9.5px] px-[20px] ${className} `}
+          className={` text-[red] text-[14px] font-semibold border-[2px]  border-customDeleteColor py-[3px] rounded px-[20px] ${className} `}
           onClick={onClick}
         >
           {children}
