@@ -1,11 +1,12 @@
 import { useState } from "react";
+import DeleteIcon from "../../assets/DeleteIcon.svg";
+import EditIcon from "../../assets/EditIcon.svg";
 import MyButton from "../../common/components/Buttons/Button";
 import CreateEmployeeProfile from "./CreatePage/CreateEmployeeProfile";
-import EditIcon from "../../assets/EditIcon.svg";
-import DeleteIcon from "../../assets/DeleteIcon.svg";
 
 const EmployeeLandingPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [editEmployeeIndex, setEditEmployeeIndex] = useState(null);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -25,10 +26,9 @@ const EmployeeLandingPage = () => {
     "Action",
   ];
 
+  //get data from local storage
   const storedData = localStorage.getItem("employeeData");
   const parsedData = JSON.parse(storedData);
-  // setEmployeeList(parsedData);
-  console.log(parsedData);
 
   // delete Employee
   const deleteEmployee = async (index) => {
@@ -38,6 +38,12 @@ const EmployeeLandingPage = () => {
     );
     localStorage.setItem("employeeData", JSON.stringify(updatedDataArray));
     window.location.reload();
+  };
+
+  // edit Employee
+  const handleEditEmployee = (index) => {
+    setEditEmployeeIndex(index);
+    openModal();
   };
 
   return (
@@ -99,7 +105,7 @@ const EmployeeLandingPage = () => {
                                 src={EditIcon}
                                 alt=""
                                 onClick={() => {
-                                  console.log(item);
+                                  handleEditEmployee(index);
                                 }}
                               />
                               <img
@@ -125,6 +131,8 @@ const EmployeeLandingPage = () => {
       <CreateEmployeeProfile
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
+        employeeData={parsedData[editEmployeeIndex]}
+        employeeIndex={editEmployeeIndex}
       />
     </>
   );

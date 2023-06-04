@@ -1,40 +1,59 @@
+/* eslint-disable react/prop-types */
 import { Col, Form, Input, Row } from "antd";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import MyButton from "../../../common/components/Buttons/Button";
 import MyModal from "../../../common/components/modal/MyModal";
 
-// eslint-disable-next-line react/prop-types
-const CreateEmployeeProfile = ({ isModalOpen, setIsModalOpen }) => {
+const CreateEmployeeProfile = ({
+  isModalOpen,
+  setIsModalOpen,
+  employeeData,
+  employeeIndex,
+}) => {
   const [form] = Form.useForm();
   const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    form.resetFields();
+    if (employeeData) {
+      form.setFieldsValue(employeeData);
+    }
+  }, [employeeData, form]);
 
   const onFinish = (values) => {
     setIsSubmitting(true);
     setTimeout(() => {
-      // Retrieve existing data from local storage or initialize as an empty array
       const dataArray = JSON.parse(localStorage.getItem("employeeData")) || [];
 
-      // Add the new values to the array
-      const updatedDataArray = [...dataArray, values];
-
-      // Save the updated array in local storage
-      localStorage.setItem("employeeData", JSON.stringify(updatedDataArray));
-
+      if (employeeData) {
+        // Update existing employee data
+        const updatedDataArray = [...dataArray];
+        updatedDataArray[employeeIndex] = values;
+        localStorage.setItem("employeeData", JSON.stringify(updatedDataArray));
+      } else {
+        // Add new employee data
+        const updatedDataArray = [...dataArray, values];
+        localStorage.setItem("employeeData", JSON.stringify(updatedDataArray));
+      }
       setIsSubmitting(false);
       form.resetFields();
       setIsModalOpen(false);
     }, 500);
   };
+
   const closeModal = () => {
     setIsModalOpen(false);
   };
+
   return (
     <>
       <Form form={form} onFinish={onFinish} layout="vertical">
         <MyModal
           isOpen={isModalOpen}
           onClose={closeModal}
-          title={"Create Employee Profile"}
+          title={
+            employeeData ? "Edit Employee Profile" : "Create Employee Profile"
+          }
         >
           <Row className="px-[25px]" gutter={[12, 2]}>
             <Col span={12}>
@@ -59,7 +78,6 @@ const CreateEmployeeProfile = ({ isModalOpen, setIsModalOpen }) => {
                 type="number"
                 rules={[
                   { required: true, message: "Please enter employee ID" },
-
                   {
                     pattern: /^[0-9]*$/,
                     message: "Employee ID should be a number",
@@ -121,7 +139,7 @@ const CreateEmployeeProfile = ({ isModalOpen, setIsModalOpen }) => {
               Cancel
             </MyButton>
             <MyButton type={"submit"} loading={isSubmitting}>
-              Save
+              {employeeData ? "Update" : "Save"}
             </MyButton>
           </div>
         </MyModal>
