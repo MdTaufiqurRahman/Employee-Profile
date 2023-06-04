@@ -1,6 +1,8 @@
 import { useState } from "react";
 import MyButton from "../../common/components/Buttons/Button";
 import CreateEmployeeProfile from "./CreatePage/CreateEmployeeProfile";
+import EditIcon from "../../assets/EditIcon.svg";
+import DeleteIcon from "../../assets/DeleteIcon.svg";
 
 const EmployeeLandingPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -13,7 +15,30 @@ const EmployeeLandingPage = () => {
     openModal();
   };
 
-  const headerData = ["SL", "Employee Name", "ID Card No.", "Price", "Action"];
+  const headerData = [
+    "SL",
+    "Employee Name",
+    "Employee Id",
+    "Designation",
+    "Email Address",
+    "Phone No",
+    "Action",
+  ];
+
+  const storedData = localStorage.getItem("employeeData");
+  const parsedData = JSON.parse(storedData);
+  // setEmployeeList(parsedData);
+  console.log(parsedData);
+
+  // delete Employee
+  const deleteEmployee = async (index) => {
+    const dataArray = JSON.parse(localStorage.getItem("employeeData")) || [];
+    const updatedDataArray = dataArray.filter(
+      (item, itemIndex) => itemIndex !== index
+    );
+    localStorage.setItem("employeeData", JSON.stringify(updatedDataArray));
+    window.location.reload();
+  };
 
   return (
     <>
@@ -46,7 +71,50 @@ const EmployeeLandingPage = () => {
                         })}
                       </tr>
                     </thead>
-                    <tbody className="divide-y divide-gray-200"></tbody>
+                    <tbody className="divide-y divide-gray-200">
+                      {parsedData?.map((item, index) => (
+                        <tr key={index}>
+                          <td className="px-5 py-[15px] text-[14px] font-normal text-center">
+                            {index + 1}
+                          </td>
+                          <td className="px-5 py-[15px] text-[14px] font-normal text-center">
+                            {item?.employeeName}
+                          </td>
+                          <td className="px-5 py-[15px] text-[14px] font-normal text-center ">
+                            {item?.employeeId}
+                          </td>
+                          <td className="px-5 py-[15px] text-[14px] font-normal text-center">
+                            {item?.designation}
+                          </td>
+                          <td className="px-5 py-[15px] text-[14px] font-normal text-center">
+                            {item?.employeeEmail}
+                          </td>
+                          <td className="px-5 py-[15px] text-[14px] font-normal text-center">
+                            {item?.phone}
+                          </td>
+                          <td className="px-5 py-[15px] text-[14px] font-normal">
+                            <div className="flex justify-center items-center">
+                              <img
+                                className="icon-image cursor-pointer mr-[7px] p-[5px] w-[22px] h-[22px] bg-[#F6E7EA]"
+                                src={EditIcon}
+                                alt=""
+                                onClick={() => {
+                                  console.log(item);
+                                }}
+                              />
+                              <img
+                                className="icon-image cursor-pointer"
+                                src={DeleteIcon}
+                                alt=""
+                                onClick={() => {
+                                  deleteEmployee(index);
+                                }}
+                              />
+                            </div>
+                          </td>
+                        </tr>
+                      ))}
+                    </tbody>
                   </table>
                 </div>
               </div>
