@@ -9,5 +9,13 @@
 }
 
 body {
-  background-color: #FFFFFF;
+  background-color: #ffffff;
+}
+
+th.ant-table-cell {
+  padding: 6px 14px !important;
+  font-size: 13px !important;
+}
+td.ant-table-cell {
+  padding: 6px 14px !important;
 }

@@ -1,8 +1,8 @@
+import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
+import { Button, Table } from "antd";
 import { useState } from "react";
-import DeleteIcon from "../../assets/DeleteIcon.svg";
-import EditIcon from "../../assets/EditIcon.svg";
-import MyButton from "../../common/components/Buttons/Button";
 import CreateEmployeeProfile from "./CreatePage/CreateEmployeeProfile";
+import MyButton from "../../common/components/Buttons/Button";
 
 const EmployeeLandingPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
@@ -16,21 +16,9 @@ const EmployeeLandingPage = () => {
     openModal();
   };
 
-  const headerData = [
-    "SL",
-    "Employee Name",
-    "Employee Id",
-    "Designation",
-    "Email Address",
-    "Phone No",
-    "Action",
-  ];
-
-  //get data from local storage
   const storedData = localStorage.getItem("employeeData");
   const parsedData = JSON.parse(storedData);
 
-  // delete Employee
   const deleteEmployee = async (index) => {
     const dataArray = JSON.parse(localStorage.getItem("employeeData")) || [];
     const updatedDataArray = dataArray.filter(
@@ -40,11 +28,66 @@ const EmployeeLandingPage = () => {
     window.location.reload();
   };
 
-  // edit Employee
   const handleEditEmployee = (index) => {
     setEditEmployeeIndex(index);
     openModal();
   };
+
+  const columns = [
+    {
+      title: "SL",
+      dataIndex: "sl",
+      key: "sl",
+      render: (text, record, index) => index + 1,
+      textAlign: "center",
+    },
+    {
+      title: "Employee Name",
+      dataIndex: "employeeName",
+      key: "employeeName",
+    },
+    {
+      title: "Employee Id",
+      dataIndex: "employeeId",
+      key: "employeeId",
+    },
+    {
+      title: "Designation",
+      dataIndex: "designation",
+      key: "designation",
+    },
+    {
+      title: "Email Address",
+      dataIndex: "employeeEmail",
+      key: "employeeEmail",
+    },
+    {
+      title: "Phone No",
+      dataIndex: "phone",
+      key: "phone",
+    },
+    {
+      title: "Action",
+      key: "action",
+      textAlign: "center",
+      render: (_, record, index) => (
+        <div className="flex justify-center items-center">
+          <EditOutlined
+            className="icon-image cursor-pointer mr-[5px] p-[4px] w-[22px] h-[22px] bg-[#F6E7EA]"
+            icon={<EditOutlined />}
+            onClick={() => handleEditEmployee(index)}
+          />
+          <DeleteOutlined
+            className="icon-image cursor-pointer mr-[5px] p-[4px] w-[22px] h-[22px] bg-[#F6E7EA]"
+            icon={<DeleteOutlined />}
+            onClick={() => deleteEmployee(index)}
+          />
+        </div>
+      ),
+    },
+  ];
+
+  const data = parsedData?.map((item, index) => ({ ...item, key: index }));
 
   return (
     <>
@@ -57,75 +100,7 @@ const EmployeeLandingPage = () => {
         </div>
 
         <div className="flex flex-col mt-3">
-          <div className="overflow-x-auto">
-            <div className="w-full inline-block align-middle">
-              <div className="overflow-hidden table_wrapper">
-                <div className="table-responsive">
-                  <table className="min-w-full divide-y divide-gray-200 table-auto">
-                    <thead className="bg-[#CFD5DB]">
-                      <tr>
-                        {headerData?.map((item, index) => {
-                          return (
-                            <th
-                              key={index}
-                              scope="col"
-                              className="px-5 py-[6px] text-[12px] text-[#333333] font-semibold text-center "
-                            >
-                              {item}
-                            </th>
-                          );
-                        })}
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-gray-200">
-                      {parsedData?.map((item, index) => (
-                        <tr key={index}>
-                          <td className="px-5 py-[15px] text-[14px] font-normal text-center">
-                            {index + 1}
-                          </td>
-                          <td className="px-5 py-[15px] text-[14px] font-normal text-center">
-                            {item?.employeeName}
-                          </td>
-                          <td className="px-5 py-[15px] text-[14px] font-normal text-center ">
-                            {item?.employeeId}
-                          </td>
-                          <td className="px-5 py-[15px] text-[14px] font-normal text-center">
-                            {item?.designation}
-                          </td>
-                          <td className="px-5 py-[15px] text-[14px] font-normal text-center">
-                            {item?.employeeEmail}
-                          </td>
-                          <td className="px-5 py-[15px] text-[14px] font-normal text-center">
-                            {item?.phone}
-                          </td>
-                          <td className="px-5 py-[15px] text-[14px] font-normal">
-                            <div className="flex justify-center items-center">
-                              <img
-                                className="icon-image cursor-pointer mr-[7px] p-[5px] w-[22px] h-[22px] bg-[#F6E7EA]"
-                                src={EditIcon}
-                                alt=""
-                                onClick={() => {
-                                  handleEditEmployee(index);
-                                }}
-                              />
-                              <img
-                                className="icon-image cursor-pointer"
-                                src={DeleteIcon}
-                                alt=""
-                                onClick={() => {
-                                  deleteEmployee(index);
-                                }}
-                              />
-                            </div>
-                          </td>
-                        </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
+          <Table columns={columns} dataSource={data} />
         </div>
       </div>
       <CreateEmployeeProfile
