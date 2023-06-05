@@ -41,7 +41,7 @@ const EmployeeLandingPage = () => {
       dataIndex: "sl",
       key: "sl",
       render: (text, record, index) => index + 1,
-      textAlign: "center",
+      align: "center",
     },
     {
       title: "Employee Name",
@@ -71,7 +71,7 @@ const EmployeeLandingPage = () => {
     {
       title: "Action",
       key: "action",
-      textAlign: "center",
+      align: "center",
       render: (_, record, index) => (
         <div className="flex justify-center items-center">
           <EyeOutlined
