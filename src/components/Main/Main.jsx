@@ -18,7 +18,7 @@ function getItem(label, path, icon, children) {
 }
 
 const items = [
-  getItem("Employee Profile", "/profile", <TeamOutlined />),
+  getItem("Employee Profile", "/", <TeamOutlined />),
   getItem("Task Assign", "/task", <PieChartOutlined />),
 ];
 
@@ -45,7 +45,7 @@ const Main = () => {
           <Content>
             <div className="p-1 min-h-[550px] bg-[colorBgContainer]">
               <Routes>
-                <Route path="/profile" element={<Profile />} />
+                <Route path="/" element={<Profile />} />
                 <Route path="/task" element={<Task />} />
               </Routes>
             </div>
