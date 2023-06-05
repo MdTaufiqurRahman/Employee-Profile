@@ -1,12 +1,14 @@
-import { DeleteOutlined, EditOutlined } from "@ant-design/icons";
-import { Button, Table } from "antd";
+import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
+import { Descriptions, Modal, Table } from "antd";
 import { useState } from "react";
-import CreateEmployeeProfile from "./CreatePage/CreateEmployeeProfile";
 import MyButton from "../../common/components/Buttons/Button";
+import CreateEmployeeProfile from "./CreatePage/CreateEmployeeProfile";
 
 const EmployeeLandingPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editEmployeeIndex, setEditEmployeeIndex] = useState(null);
+  // New state for the view modal
+  const [isViewModalOpen, setIsViewModalOpen] = useState(false);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -72,6 +74,11 @@ const EmployeeLandingPage = () => {
       textAlign: "center",
       render: (_, record, index) => (
         <div className="flex justify-center items-center">
+          <EyeOutlined
+            className="icon-image cursor-pointer mr-[5px] p-[4px] w-[22px] h-[22px] bg-[#F6E7EA]"
+            icon={<EyeOutlined />}
+            onClick={() => handleViewEmployee(index)} // Handle view employee click
+          />
           <EditOutlined
             className="icon-image cursor-pointer mr-[5px] p-[4px] w-[22px] h-[22px] bg-[#F6E7EA]"
             icon={<EditOutlined />}
@@ -89,6 +96,40 @@ const EmployeeLandingPage = () => {
 
   const data = parsedData?.map((item, index) => ({ ...item, key: index }));
 
+  // View modal
+  const handleViewEmployee = (index) => {
+    setEditEmployeeIndex(index);
+    setIsViewModalOpen(true); // Open the view modal
+  };
+  const viewModal = (
+    <Modal
+      title="View Employee Profile"
+      visible={isViewModalOpen}
+      onCancel={() => setIsViewModalOpen(false)}
+      footer={null}
+    >
+      {editEmployeeIndex !== null && (
+        <Descriptions bordered column={1}>
+          <Descriptions.Item label="Employee Name">
+            {parsedData[editEmployeeIndex]?.employeeName}
+          </Descriptions.Item>
+          <Descriptions.Item label="Employee Id">
+            {parsedData[editEmployeeIndex]?.employeeId}
+          </Descriptions.Item>
+          <Descriptions.Item label="Designation">
+            {parsedData[editEmployeeIndex]?.designation}
+          </Descriptions.Item>
+          <Descriptions.Item label="Email Address">
+            {parsedData[editEmployeeIndex]?.employeeEmail}
+          </Descriptions.Item>
+          <Descriptions.Item label="Phone No">
+            {parsedData[editEmployeeIndex]?.phone}
+          </Descriptions.Item>
+        </Descriptions>
+      )}
+    </Modal>
+  );
+
   return (
     <>
       <div className="m-3">
@@ -103,6 +144,9 @@ const EmployeeLandingPage = () => {
           <Table columns={columns} dataSource={data} />
         </div>
       </div>
+      {/* view modal  */}
+      {viewModal}
+      {/* create and edit modal */}
       <CreateEmployeeProfile
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
