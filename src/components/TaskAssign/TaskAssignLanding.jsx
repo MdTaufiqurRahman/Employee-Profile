@@ -1,5 +1,10 @@
-import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
-import { Descriptions, Modal, Table } from "antd";
+import {
+  DeleteOutlined,
+  EditOutlined,
+  EyeOutlined,
+  QuestionCircleOutlined,
+} from "@ant-design/icons";
+import { Descriptions, Modal, Popconfirm, Table } from "antd";
 import { useState } from "react";
 import MyButton from "../../common/components/Buttons/Button";
 import TaskCreate from "./CreatePage/TaskCreate";
@@ -7,7 +12,8 @@ import TaskCreate from "./CreatePage/TaskCreate";
 const TaskAssignLanding = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
-  const [editEmployeeIndex, setEditEmployeeIndex] = useState(null);
+  const [editEmployeeTaskIndex, setEditEmployeeTaskIndex] = useState(null);
+  const [isEdit, setIsEdit] = useState(false);
 
   const openModal = () => {
     setIsModalOpen(true);
@@ -15,6 +21,7 @@ const TaskAssignLanding = () => {
 
   const handleClick = () => {
     openModal();
+    setIsEdit(false); // Set isEdit to false for create mode
   };
 
   const storedData = localStorage.getItem("taskAssignmentData");
@@ -67,11 +74,15 @@ const TaskAssignLanding = () => {
             icon={<EditOutlined />}
             onClick={() => handleEditEmployeeTask(index)}
           />
-          <DeleteOutlined
+          <Popconfirm
+            placement="topLeft"
+            title="Delete the task"
+            description="Are you sure to delete this?"
             className="icon-image cursor-pointer mr-[5px] p-[4px] w-[22px] h-[22px] bg-[#F6E7EA]"
-            icon={<DeleteOutlined />}
-            onClick={() => deleteTaskData(index)}
-          />
+            onConfirm={() => deleteTaskData(index)}
+          >
+            <DeleteOutlined />
+          </Popconfirm>
         </div>
       ),
     },
@@ -81,13 +92,14 @@ const TaskAssignLanding = () => {
 
   // Edit modal
   const handleEditEmployeeTask = (index) => {
-    setEditEmployeeIndex(index);
+    setEditEmployeeTaskIndex(index);
+    setIsEdit(true); // Set isEdit to true for edit mode
     openModal();
   };
 
   // View modal
   const handleViewEmployee = (index) => {
-    setEditEmployeeIndex(index);
+    setEditEmployeeTaskIndex(index);
     setIsViewModalOpen(true); // Open the view modal
   };
   const viewModal = (
@@ -97,13 +109,13 @@ const TaskAssignLanding = () => {
       onCancel={() => setIsViewModalOpen(false)}
       footer={null}
     >
-      {editEmployeeIndex !== null && (
+      {editEmployeeTaskIndex !== null && (
         <Descriptions bordered column={1}>
           <Descriptions.Item label="Employee Name">
-            {parsedData[editEmployeeIndex]?.employeeName}
+            {parsedData[editEmployeeTaskIndex]?.employeeName}
           </Descriptions.Item>
           <Descriptions.Item label="Task Name">
-            {parsedData[editEmployeeIndex]?.task}
+            {parsedData[editEmployeeTaskIndex]?.task}
           </Descriptions.Item>
         </Descriptions>
       )}
@@ -125,7 +137,21 @@ const TaskAssignLanding = () => {
           </div>
         </div>
         {viewModal}
-        <TaskCreate isModalOpen={isModalOpen} setIsModalOpen={setIsModalOpen} />
+        <TaskCreate
+          isModalOpen={isModalOpen}
+          setIsModalOpen={setIsModalOpen}
+          taskAssignmentData={
+            isEdit && editEmployeeTaskIndex !== null
+              ? parsedData[editEmployeeTaskIndex]
+              : null
+          }
+          employeeTaskIndex={
+            isEdit && editEmployeeTaskIndex !== null
+              ? editEmployeeTaskIndex
+              : -1
+          }
+          isEdit={isEdit}
+        />
       </>
     </>
   );

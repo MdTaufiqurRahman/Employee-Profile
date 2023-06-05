@@ -1,5 +1,10 @@
-import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
-import { Descriptions, Modal, Table } from "antd";
+import {
+  DeleteOutlined,
+  EditOutlined,
+  EyeOutlined,
+  QuestionCircleOutlined,
+} from "@ant-design/icons";
+import { Descriptions, Modal, Popconfirm, Table } from "antd";
 import { useState } from "react";
 import MyButton from "../../common/components/Buttons/Button";
 import CreateEmployeeProfile from "./CreatePage/CreateEmployeeProfile";
@@ -84,11 +89,15 @@ const EmployeeLandingPage = () => {
             icon={<EditOutlined />}
             onClick={() => handleEditEmployee(index)}
           />
-          <DeleteOutlined
+          <Popconfirm
+            placement="topLeft"
+            title="Delete the Employee"
+            description="Are you sure to delete this?"
             className="icon-image cursor-pointer mr-[5px] p-[4px] w-[22px] h-[22px] bg-[#F6E7EA]"
-            icon={<DeleteOutlined />}
-            onClick={() => deleteEmployee(index)}
-          />
+            onConfirm={() => deleteEmployee(index)}
+          >
+            <DeleteOutlined />
+          </Popconfirm>
         </div>
       ),
     },

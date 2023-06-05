@@ -11,11 +11,19 @@
 body {
   background-color: #ffffff;
 }
-
+/* for modify the table */
 th.ant-table-cell {
   padding: 8px 14px !important;
   font-size: 13px !important;
 }
 td.ant-table-cell {
   padding: 8px 14px !important;
+}
+/* for modify the button */
+button.ant-btn.css-dev-only-do-not-override-k7429z.ant-btn-primary.ant-btn-sm {
+  background-color: red !important;
+}
+
+span.ant-popconfirm-message-icon {
+  margin-top: -3px;
 }
