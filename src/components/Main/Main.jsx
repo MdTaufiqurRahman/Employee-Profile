@@ -1,7 +1,7 @@
 import { PieChartOutlined, TeamOutlined } from "@ant-design/icons";
-import { Layout, Menu, theme } from "antd";
+import { Layout, Menu } from "antd";
 import { useState } from "react";
-import { BrowserRouter as Router, Routes, Route, Link } from "react-router-dom";
+import { Link, Route, BrowserRouter as Router, Routes } from "react-router-dom";
 import EmployeeLandingPage from "../EmployeeProfile/LandingPage";
 import TaskAssignLanding from "../TaskAssign/TaskAssignLanding";
 
@@ -19,7 +19,7 @@ function getItem(label, path, icon, children) {
 
 const items = [
   getItem("Employee Profile", "/", <TeamOutlined />),
-  getItem("Task Assign", "/task", <PieChartOutlined />),
+  getItem("Task Assign", "/taskAssign", <PieChartOutlined />),
 ];
 
 const Main = () => {
@@ -46,7 +46,7 @@ const Main = () => {
             <div className="p-1 min-h-[550px] bg-[colorBgContainer]">
               <Routes>
                 <Route path="/" element={<Profile />} />
-                <Route path="/task" element={<Task />} />
+                <Route path="/taskAssign" element={<Task />} />
               </Routes>
             </div>
           </Content>

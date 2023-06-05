@@ -131,8 +131,10 @@ const EmployeeLandingPage = () => {
       <CreateEmployeeProfile
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
-        employeeData={parsedData[editEmployeeIndex]}
-        employeeIndex={editEmployeeIndex}
+        employeeData={
+          editEmployeeIndex !== null ? parsedData[editEmployeeIndex] : null
+        }
+        employeeIndex={editEmployeeIndex !== null ? editEmployeeIndex : -1}
       />
     </>
   );
