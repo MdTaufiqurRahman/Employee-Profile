@@ -48,5 +48,7 @@ or yarn
 
 5. Ant Design
 
+6. Local Storage
+
 <p  align="center"  bold>©2023 Created by Taufiqur </p>
 # Assignment
