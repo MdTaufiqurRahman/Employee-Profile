@@ -28,6 +28,26 @@ const CreateEmployeeProfile = ({
     setTimeout(() => {
       const dataArray = JSON.parse(localStorage.getItem("employeeData")) || [];
 
+      const taskArray =
+        JSON.parse(localStorage.getItem("taskAssignmentData")) || [];
+
+      const updateTaskWithEmployeeId = taskArray.map((task) => {
+        if (task.employeeId === values?.employeeId) {
+          console.log(task.employeeId, values?.employeeId);
+          return {
+            ...task,
+            employeeId: values.employeeId,
+            employeeName: values.employeeName,
+          };
+        }
+        return task;
+      });
+
+      localStorage.setItem(
+        "taskAssignmentData",
+        JSON.stringify(updateTaskWithEmployeeId)
+      );
+
       if (isEdit && employeeData) {
         // Update existing employee data
         const updatedDataArray = [...dataArray];

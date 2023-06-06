@@ -24,8 +24,17 @@ const EmployeeLandingPage = () => {
   const parsedData = JSON.parse(storedData);
 
   // delete employee
-  const deleteEmployee = async (index) => {
+  const deleteEmployee = async (index, employeeId) => {
     const dataArray = JSON.parse(localStorage.getItem("employeeData")) || [];
+    const taskArray =
+      JSON.parse(localStorage.getItem("taskAssignmentData")) || [];
+    const updateTaskWithEmployeeId = taskArray.filter(
+      (task) => task.employeeId !== employeeId
+    );
+    localStorage.setItem(
+      "taskAssignmentData",
+      JSON.stringify(updateTaskWithEmployeeId)
+    );
     const updatedDataArray = dataArray.filter(
       (item, itemIndex) => itemIndex !== index
     );
@@ -94,7 +103,7 @@ const EmployeeLandingPage = () => {
             title="Delete the Employee"
             description="Are you sure to delete this?"
             className="icon-image cursor-pointer mr-[5px] p-[4px] w-[22px] h-[22px]"
-            onConfirm={() => deleteEmployee(index)}
+            onConfirm={() => deleteEmployee(index, record?.employeeId)}
           >
             <DeleteOutlined />
           </Popconfirm>
