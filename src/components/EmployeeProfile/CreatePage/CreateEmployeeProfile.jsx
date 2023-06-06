@@ -9,23 +9,24 @@ const CreateEmployeeProfile = ({
   setIsModalOpen,
   employeeData,
   employeeIndex,
+  isEdit,
 }) => {
   const [form] = Form.useForm();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
     form.resetFields();
-    if (employeeData) {
+    if (isEdit && employeeData) {
       form.setFieldsValue(employeeData);
     }
-  }, [employeeData, form]);
+  }, [employeeData, form, isEdit]);
 
   const onFinish = (values) => {
     setIsSubmitting(true);
     setTimeout(() => {
       const dataArray = JSON.parse(localStorage.getItem("employeeData")) || [];
 
-      if (employeeData) {
+      if (isEdit && employeeData) {
         // Update existing employee data
         const updatedDataArray = [...dataArray];
         updatedDataArray[employeeIndex] = values;
@@ -51,9 +52,7 @@ const CreateEmployeeProfile = ({
         <MyModal
           isOpen={isModalOpen}
           onClose={closeModal}
-          title={
-            employeeData ? "Edit Employee Profile" : "Create Employee Profile"
-          }
+          title={isEdit ? "Edit Employee Profile" : "Create Employee Profile"}
         >
           <Row className="px-[25px]" gutter={[12, 2]}>
             <Col span={12}>
@@ -139,7 +138,7 @@ const CreateEmployeeProfile = ({
               Cancel
             </MyButton>
             <MyButton type={"submit"} loading={isSubmitting}>
-              {employeeData ? "Update" : "Save"}
+              {isEdit ? "Update" : "Save"}
             </MyButton>
           </div>
         </MyModal>

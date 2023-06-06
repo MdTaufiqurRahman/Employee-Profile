@@ -1,9 +1,4 @@
-import {
-  DeleteOutlined,
-  EditOutlined,
-  EyeOutlined,
-  QuestionCircleOutlined,
-} from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
 import { Descriptions, Modal, Popconfirm, Table } from "antd";
 import { useState } from "react";
 import MyButton from "../../common/components/Buttons/Button";
@@ -12,6 +7,7 @@ import CreateEmployeeProfile from "./CreatePage/CreateEmployeeProfile";
 const EmployeeLandingPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editEmployeeIndex, setEditEmployeeIndex] = useState(null);
+  const [isEdit, setIsEdit] = useState(false);
   // New state for the view modal
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
 
@@ -21,6 +17,7 @@ const EmployeeLandingPage = () => {
 
   const handleClick = () => {
     openModal();
+    setIsEdit(false); // Set isEdit to false for create mode
   };
 
   const storedData = localStorage.getItem("employeeData");
@@ -37,6 +34,7 @@ const EmployeeLandingPage = () => {
 
   const handleEditEmployee = (index) => {
     setEditEmployeeIndex(index);
+    setIsEdit(true); // Set isEdit to true for edit mode
     openModal();
   };
 
@@ -160,9 +158,14 @@ const EmployeeLandingPage = () => {
         isModalOpen={isModalOpen}
         setIsModalOpen={setIsModalOpen}
         employeeData={
-          editEmployeeIndex !== null ? parsedData[editEmployeeIndex] : null
+          isEdit && editEmployeeIndex !== null
+            ? parsedData[editEmployeeIndex]
+            : null
         }
-        employeeIndex={editEmployeeIndex !== null ? editEmployeeIndex : -1}
+        employeeIndex={
+          isEdit && editEmployeeIndex !== null ? editEmployeeIndex : -1
+        }
+        isEdit={isEdit}
       />
     </>
   );

@@ -1,8 +1,7 @@
 import {
   DeleteOutlined,
   EditOutlined,
-  EyeOutlined,
-  QuestionCircleOutlined,
+  EyeOutlined
 } from "@ant-design/icons";
 import { Descriptions, Modal, Popconfirm, Table } from "antd";
 import { useState } from "react";
