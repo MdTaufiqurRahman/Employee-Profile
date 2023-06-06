@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
 import { Col, Form, Input, Row } from "antd";
-import { useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import MyButton from "../../../common/components/Buttons/Button";
 import MyModal from "../../../common/components/modal/MyModal";
 
@@ -14,6 +14,7 @@ const CreateEmployeeProfile = ({
   const [form] = Form.useForm();
   const [isSubmitting, setIsSubmitting] = useState(false);
 
+  // Set form values for edit mode
   useEffect(() => {
     form.resetFields();
     if (isEdit && employeeData) {
@@ -21,6 +22,7 @@ const CreateEmployeeProfile = ({
     }
   }, [employeeData, form, isEdit]);
 
+  // Form submit
   const onFinish = (values) => {
     setIsSubmitting(true);
     setTimeout(() => {

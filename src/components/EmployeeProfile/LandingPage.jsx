@@ -8,7 +8,6 @@ const EmployeeLandingPage = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editEmployeeIndex, setEditEmployeeIndex] = useState(null);
   const [isEdit, setIsEdit] = useState(false);
-  // New state for the view modal
   const [isViewModalOpen, setIsViewModalOpen] = useState(false);
 
   const openModal = () => {
@@ -20,9 +19,11 @@ const EmployeeLandingPage = () => {
     setIsEdit(false); // Set isEdit to false for create mode
   };
 
+  // Get employee data from local storage
   const storedData = localStorage.getItem("employeeData");
   const parsedData = JSON.parse(storedData);
 
+  // delete employee
   const deleteEmployee = async (index) => {
     const dataArray = JSON.parse(localStorage.getItem("employeeData")) || [];
     const updatedDataArray = dataArray.filter(
@@ -32,12 +33,14 @@ const EmployeeLandingPage = () => {
     window.location.reload();
   };
 
+  // Edit employee
   const handleEditEmployee = (index) => {
     setEditEmployeeIndex(index);
     setIsEdit(true); // Set isEdit to true for edit mode
     openModal();
   };
 
+  // Table columns
   const columns = [
     {
       title: "SL",
@@ -78,12 +81,12 @@ const EmployeeLandingPage = () => {
       render: (_, record, index) => (
         <div className="flex justify-center items-center">
           <EyeOutlined
-            className="icon-image cursor-pointer mr-[5px] p-[4px] w-[22px] h-[22px] bg-[#F6E7EA]"
+            className="icon-image cursor-pointer mr-[5px] p-[4px] w-[22px] h-[22px] "
             icon={<EyeOutlined />}
             onClick={() => handleViewEmployee(index)} // Handle view employee click
           />
           <EditOutlined
-            className="icon-image cursor-pointer mr-[5px] p-[4px] w-[22px] h-[22px] bg-[#F6E7EA]"
+            className="icon-image cursor-pointer mr-[5px] p-[4px] w-[22px] h-[22px] "
             icon={<EditOutlined />}
             onClick={() => handleEditEmployee(index)}
           />
@@ -91,7 +94,7 @@ const EmployeeLandingPage = () => {
             placement="topLeft"
             title="Delete the Employee"
             description="Are you sure to delete this?"
-            className="icon-image cursor-pointer mr-[5px] p-[4px] w-[22px] h-[22px] bg-[#F6E7EA]"
+            className="icon-image cursor-pointer mr-[5px] p-[4px] w-[22px] h-[22px]"
             onConfirm={() => deleteEmployee(index)}
           >
             <DeleteOutlined />
@@ -101,6 +104,7 @@ const EmployeeLandingPage = () => {
     },
   ];
 
+  // Add key to the data
   const data = parsedData?.map((item, index) => ({ ...item, key: index }));
 
   // View modal

@@ -1,8 +1,4 @@
-import {
-  DeleteOutlined,
-  EditOutlined,
-  EyeOutlined
-} from "@ant-design/icons";
+import { DeleteOutlined, EditOutlined, EyeOutlined } from "@ant-design/icons";
 import { Descriptions, Modal, Popconfirm, Table } from "antd";
 import { useState } from "react";
 import MyButton from "../../common/components/Buttons/Button";
@@ -23,9 +19,11 @@ const TaskAssignLanding = () => {
     setIsEdit(false); // Set isEdit to false for create mode
   };
 
+  // Get task data from local storage
   const storedData = localStorage.getItem("taskAssignmentData");
   const parsedData = JSON.parse(storedData);
 
+  // delete task
   const deleteTaskData = async (index) => {
     const dataArray =
       JSON.parse(localStorage.getItem("taskAssignmentData")) || [];
@@ -39,6 +37,7 @@ const TaskAssignLanding = () => {
     window.location.reload();
   };
 
+  // Table columns
   const columns = [
     {
       title: "SL",
@@ -64,12 +63,12 @@ const TaskAssignLanding = () => {
       render: (_, record, index) => (
         <div className="flex justify-center items-center">
           <EyeOutlined
-            className="icon-image cursor-pointer mr-[5px] p-[4px] w-[22px] h-[22px] bg-[#F6E7EA]"
+            className="icon-image cursor-pointer mr-[5px] p-[4px] w-[22px] h-[22px]"
             icon={<EyeOutlined />}
             onClick={() => handleViewEmployee(index)} // Handle view employee click
           />
           <EditOutlined
-            className="icon-image cursor-pointer mr-[5px] p-[4px] w-[22px] h-[22px] bg-[#F6E7EA]"
+            className="icon-image cursor-pointer mr-[5px] p-[4px] w-[22px] h-[22px]"
             icon={<EditOutlined />}
             onClick={() => handleEditEmployeeTask(index)}
           />
@@ -77,7 +76,7 @@ const TaskAssignLanding = () => {
             placement="topLeft"
             title="Delete the task"
             description="Are you sure to delete this?"
-            className="icon-image cursor-pointer mr-[5px] p-[4px] w-[22px] h-[22px] bg-[#F6E7EA]"
+            className="icon-image cursor-pointer mr-[5px] p-[4px] w-[22px] h-[22px]"
             onConfirm={() => deleteTaskData(index)}
           >
             <DeleteOutlined />
@@ -87,6 +86,7 @@ const TaskAssignLanding = () => {
     },
   ];
 
+  // Add key to the data
   const data = parsedData?.map((item, index) => ({ ...item, key: index }));
 
   // Edit modal
