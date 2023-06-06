@@ -1,4 +1,5 @@
 # <p  align="center">Task 🚀🚀</p>
+
 ### Installation 💻
 
 1. Clone the repository
@@ -26,8 +27,14 @@ or yarn
 ```bash
 > yarn dev
 ```
+
 ## Screenshots
 
+![Readme_Banner1](./src/assets/Screenshot_1.png)
+![Readme_Banner2](./src/assets/Screenshot_2.png)
+![Readme_Banner3](./src/assets/Screenshot_3.png)
+![Readme_Banner4](./src/assets/Screenshot_4.png)
+![Readme_Banner5](./src/assets/Screenshot_5.png)
 
 ### Tech 🚀🚀
 
@@ -39,7 +46,7 @@ or yarn
 
 4. Tailwind CSS
 
-4. Ant Design
+5. Ant Design
 
-<p  align="center"  bold> </p>
+<p  align="center"  bold>©2023 Created by Taufiqur </p>
 # Assignment
