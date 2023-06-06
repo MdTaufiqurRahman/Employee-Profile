@@ -28,22 +28,33 @@ const TaskCreate = ({
 
   // submit handler
   const handleFormSubmit = (values) => {
+    const storedData = localStorage.getItem("employeeData");
+    const parsedData = JSON.parse(storedData) || [];
+
+    const selectedEmployee = parsedData.find(
+      (employee) => employee.employeeName === values?.employee
+    );
+
     const taskAssignmentData = {
+      employeeId: selectedEmployee?.employeeId,
       employeeName: values?.employee,
       task: values?.task,
     };
-    const storedData = localStorage.getItem("taskAssignmentData");
-    const existingTaskAssignments = JSON.parse(storedData) || [];
+
+    const storedTaskData = localStorage.getItem("taskAssignmentData");
+    const existingTaskAssignments = JSON.parse(storedTaskData) || [];
 
     if (isEdit && employeeTaskIndex !== -1) {
       existingTaskAssignments[employeeTaskIndex] = taskAssignmentData;
     } else {
       existingTaskAssignments.push(taskAssignmentData);
     }
+
     localStorage.setItem(
       "taskAssignmentData",
       JSON.stringify(existingTaskAssignments)
     );
+
     form.resetFields();
     setIsModalOpen(false);
   };
