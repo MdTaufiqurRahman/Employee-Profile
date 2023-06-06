@@ -24,6 +24,10 @@ button.ant-btn.css-dev-only-do-not-override-k7429z.ant-btn-primary.ant-btn-sm {
   background-color: red !important;
 }
 
+button.ant-btn.css-k7429z.ant-btn-primary.ant-btn-sm {
+  background-color: red !important;
+}
+
 span.ant-popconfirm-message-icon {
   margin-top: -3px;
 }

@@ -91,7 +91,6 @@ const EmployeeLandingPage = () => {
             onClick={() => handleEditEmployee(index)}
           />
           <Popconfirm
-            placement="topLeft"
             title="Delete the Employee"
             description="Are you sure to delete this?"
             className="icon-image cursor-pointer mr-[5px] p-[4px] w-[22px] h-[22px]"
